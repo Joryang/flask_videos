@@ -9,9 +9,14 @@
     ul
     {
 	list-style-type:none;
-	margin:0;
+	margin:5;
 	padding:0;
 	overflow:hidden;
+    }
+    #nav
+    {
+	padding:10px;
+	margin:10px;
     }
     li
     {
@@ -25,13 +30,24 @@
 	color:#FFFFFF;
 	background-color:#bebebe;
 	text-align:center;
-	padding:4px;
+	padding:8px;
 	text-decoration:none;
 	text-transform:uppercase;
     }
     a:hover,a:active
     {
 	background-color:#cc0000;
+    }
+    .video
+    {
+	float:left;
+	padding:10px;
+	margin:10px;
+    }
+    .page-header
+    {
+	padding:10px;
+	margin:10px;
     }
     </style>
     {% endblock style %}
@@ -41,10 +57,12 @@
 <body>
     {% block body %}
     {% block navbar %}
+    <div id="nav">
     <ul>
 	<li><a href="{{ url_for('index') }}">Home</a></li>
 	<li><a href="{{ url_for('videos') }}">Videos</a></li>
     </ul>
+    </div>
     {% endblock navbar %}
     {% block content %}{% endblock content %}
     {% endblock body %}

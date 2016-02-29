@@ -3,13 +3,12 @@
 
 {% block content %}
 <div class="page-header">
-    <h1>Hello, {% if name %}{{ name }}{% else %}Stranger{% endif %}!</h1>
+    {{ wtf.quick_form(form) }}
 </div>
-{{ wtf.quick_form(form) }}
 <div>
 {% for video in videos %}
     <div class="video">
-	<video src="{{ url_for('static', filename=video.video_name) }}" width="320" height="240" controls="controls">
+	<video src="{{ url_for('static', filename=video.video_name) }}" width="160" height="120" controls="controls">
 	Your brower dose not support the video tag.
 	</video>
     </div>
