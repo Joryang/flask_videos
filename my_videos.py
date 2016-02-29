@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, session, url_for
 from flask.ext.script import Manager
 from flask.ext.wtf import Form
 from wtforms import StringField, SubmitField
@@ -10,6 +10,8 @@ from flask.ext.sqlalchemy import SQLAlchemy
 import time
 import random
 import os
+
+basedir = os.path.abspath(os.path.dirname(__file__))
 
 class VideosUploadForm(Form):
     video_name = FileField('Upload video')
@@ -36,13 +38,18 @@ class Videos(db.Model):
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-    name = None
     form = VideosUploadForm()
     if form.validate_on_submit():
 	video_name = secure_filename(form.video_name.data.filename)
-	form.video_name.data.save('/var/www/wsgi-scripts/flask_videos/'+'flask'+str(int(time.time()*random.randint(1,100)))+video_name)
+	if video_name:
+	    vname = 'flask'+str(int(time.time()*random.randint(1,100))) + video_name
+	    vid = Videos(video_name=vname)
+	    db.session.add(vid)
+	form.video_name.data.save('/var/www/wsgi-scripts/flask_videos/static/'+vname)
 	form.video_name.data = ''
-    return render_template('index.html', form=form)
+	return redirect(url_for('index'))
+    videos = Videos.query.all()
+    return render_template('index.html', form=form, videos=videos)
 
 @app.route('/videos/')
 def videos():
