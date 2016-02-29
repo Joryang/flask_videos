@@ -55,5 +55,9 @@ def index():
 def videos():
     return render_template('videos.html')
 
+@app.route('/photos/')
+def photos():
+    return render_template('photos.html')
+
 if __name__ == '__main__':
     manager.run()
